@@ -1,0 +1,155 @@
+body{
+
+    height: auto;
+
+    width: 90%;
+
+    background-color:silver;
+
+    margin:auto;
+
+    text-align: center;
+
+   }
+
+ 
+
+ p {
+
+    margin: auto;
+
+    width: 70%;
+
+    text-align: center;
+
+    font: 440 16px/28px Roboto,sans-serif;
+
+    }
+
+ /*producimos un acercamineto de los link*/
+button:hover,button:focus{
+        border-radius: 50%;
+        border: thick solid white;
+        color:rgb(4, 5, 1);
+        background:rgb(162, 162, 194);
+        -moz-box-shadow:10px 10px 7px rgba(0,0,0,.7);
+        -webkit-box-shadow: 10px 10px 7pxrgba(0,0,0,.7);
+        box-shadow:10px 10px 7px rgba(0,0,0,.7);
+        -webkit-transform: scale(1.25);
+        -moz-transform: scale(1.25);
+        -o-transform: scale(1.25);
+    }
+
+.contenedor{
+
+        margin: auto;
+        background: violet;
+        border-radius:10%;
+        border: 10px solid white;/*color a los bordes del boton*/
+        box-shadow: 12px 12px 15px #000;/*sombras al div*/
+        border-style:outset;        
+        width: 90%;
+
+        }
+
+
+.code{
+     
+     background:white;
+     width:90%;
+     border-radius:5%;
+     border-style:outset;/*estilizamos el borde*/
+     box-shadow: 12px 12px 15px #000;
+     }
+.control{
+     width:100%;
+     border: 2px solid blue;
+
+     border-radius:15%;
+     border-style:outset;/*estilizamos el titulo*/
+       
+}
+.err {
+
+    color: red;
+
+     font-weight: bold;
+
+     }
+
+.caption {
+
+     margin: 0;
+
+     font-weight:bold;
+
+     }
+
+.texto{
+
+    text-wrap: unrestricted;
+
+    padding: 0px;
+
+    margin:5px;
+
+      }
+
+
+
+
+
+button {
+    
+    width:20%;
+
+    padding: 6px 12px;
+
+    margin-bottom: 5px;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    vertical-align: middle;
+
+    -ms-touch-action: manipulation;
+
+    touch-action: manipulation;
+
+    cursor: pointer;
+
+    -webkit-user-select: none;
+
+    -moz-user-select: none;
+
+    -ms-user-select: none;
+
+
+     
+    
+    box-shadow: 12px 12px 15px cyan;/*sombras a el boton*/
+
+    
+    }
+
+
+
+button[disabled] {
+
+    cursor: not-allowed;
+
+    filter: alpha(opacity=75);
+
+    -webkit-box-shadow: none;
+
+    box-shadow: none;
+
+    opacity: .55;
+}
+
