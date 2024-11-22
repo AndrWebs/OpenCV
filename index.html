@@ -7,64 +7,66 @@
 <script src="utils.js" type="text/javascript"></script>
 </head>
 <body>
-<h1>Flujo Optico</h1>
+<h1>Ejemplo de Flujo Optico usando OpenCv</h1>
 <div class="contenedor">
-    <div>
-        <div class="caption">videoInput</div>
-        <video id="videoInput" loop ></video>
-     </div>
-    <div>
-         <div class="caption">canvasOutput</div>
-         <canvas id="canvasOutput"></canvas>
-     </div>      
+    <div class="entrada">
+    
+        <video id="videoInput" loop></video>
+    </div>
+<br><br>
+    <div class="Salida">
+        <h2>Salida de video</h2>
+        <canvas id="canvasOutput"></canvas>
+    </div>
+    
+
     <button id="startAndStop" disabled>Start</button>
  
     <div class="control">
      <textarea class="code" rows="29" cols="100" id="codeEditor" spellcheck="false"></textarea>
-     <p class="err" id="errorMessage"></p><!--error si hay en el codigo-->
+     <p class="err" id="errorMessage"></p><!--Error  en el codigo-->
     </div>
-
  
- <script id="codeSnippet" type="text/code-snippet">
+   <script id="codeSnippet" type="text/code-snippet">
  let video = document.getElementById('videoInput');
  let cap = new cv.VideoCapture(video);
 
  // parametros de deteccion de cornes por ShiTomasi
- let [maxCorners, qualityLevel, minDistance, blockSize] = [20, 0.2, 6, 6];
+ let [maxCorners, qualityLevel, minDistance, blockSize] = [10, 0.2, 6, 6];
 
-// parametros por lucas kanade
-let winSize = new cv.Size(10, 10);
-let maxLevel = 2;
-let criteria = new cv.TermCriteria(cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 0.03);
+ // parametros por lucas kanade
+ let winSize = new cv.Size(10, 10);
+ let maxLevel = 2;
+ let criteria = new cv.TermCriteria(cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 0.03);
 
-// crea algunos colores aleatorios
-let color = [];
-for (let i = 0; i < maxCorners; i++) {
+ // crea algunos colores aleatorios
+ let color = [];
+ for (let i = 0; i < maxCorners; i++) {
     color.push(new cv.Scalar(parseInt(Math.random()*255), parseInt(Math.random()*255),
                              parseInt(Math.random()*255), 255));
-}
+ }
 
-// Tome el primer cuadro y encuentre esquinas en el
-let oldFrame = new cv.Mat(video.height, video.width, cv.CV_8UC4);
-cap.read(oldFrame);
-let oldGray = new cv.Mat();
-cv.cvtColor(oldFrame, oldGray, cv.COLOR_RGB2GRAY);
-let p0 = new cv.Mat();
-let none = new cv.Mat();
-cv.goodFeaturesToTrack(oldGray, p0, maxCorners, qualityLevel, minDistance, none, blockSize);
+ // Tome el primer cuadro y encuentre esquinas en el
+ let oldFrame = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+ cap.read(oldFrame);
+ let oldGray = new cv.Mat();
+ cv.cvtColor(oldFrame, oldGray, cv.COLOR_RGB2GRAY);
+ let p0 = new cv.Mat();
+ let none = new cv.Mat();
+ cv.goodFeaturesToTrack(oldGray, p0, maxCorners, qualityLevel, minDistance, none, blockSize);
 
-// Crear una imagen de máscara con fines de dibujo
-let zeroEle = new cv.Scalar(0, 0, 0, 255);
-let mask = new cv.Mat(oldFrame.rows, oldFrame.cols, oldFrame.type(), zeroEle);
+ // Crear una imagen de máscara con fines de dibujo
+ let zeroEle = new cv.Scalar(0, 0, 0, 255);
+ let mask = new cv.Mat(oldFrame.rows, oldFrame.cols, oldFrame.type(), zeroEle);
 
-let frame = new cv.Mat(video.height, video.width, cv.CV_8UC4);
-let frameGray = new cv.Mat();
-let p1 = new cv.Mat();
-let st = new cv.Mat();
-let err = new cv.Mat();
+ let frame = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+ let frameGray = new cv.Mat();
+ let p1 = new cv.Mat();
+ let st = new cv.Mat();
+ let err = new cv.Mat();
 
-const FPS = 30;
-function processVideo() {
+ const FPS = 30;
+ function processVideo() {
     try {
         if (!streaming) {
             // clean and stop.
@@ -111,16 +113,16 @@ function processVideo() {
         // schedule the next one.
         let delay = 1000/FPS - (Date.now() - begin);
         setTimeout(processVideo, delay);
-    } catch (err) {
-        utils.printError(err);
-    }
-};
+         } catch (err) {
+                        utils.printError(err);
+                        }
+        };
 
-//Programe el siguiente.
-setTimeout(processVideo, 0);
-</script>
+   //Programe el siguiente.
+   setTimeout(processVideo, 0);
+   </script>
 
-<script type="text/javascript">
+   <script type="text/javascript">
   let utils = new Utils('errorMessage');
 
   utils.loadCode('codeSnippet', 'codeEditor');
@@ -141,23 +143,24 @@ setTimeout(processVideo, 0);
     }
    });
 
-function onVideoStarted() {
+ function onVideoStarted() {
     streaming = true;
     startAndStop.innerText = 'Stop';
     videoInput.width = videoInput.videoWidth;
     videoInput.height = videoInput.videoHeight;
     utils.executeCode('codeEditor');
-}
+ }
 
-function onVideoStopped() {
+ function onVideoStopped() {
     streaming = false;
     canvasContext.clearRect(0, 0, canvasOutput.width, canvasOutput.height);
     startAndStop.innerText = 'Start';
-}
+ }
 
-utils.loadOpenCv(() => {startAndStop.removeAttribute('disabled');});
+ utils.loadOpenCv(() => {startAndStop.removeAttribute('disabled');});
 
-</script>
+   </script>
+
 </div><!--fin del contenedor-->
 </body>
 </html>
